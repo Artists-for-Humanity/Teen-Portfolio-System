@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-gotham: var(--font-gotham)
+}
+
+
+/*
+        animate={{
+          x: [0, -(marqueeWidth + 24) / 3],
+          transition: {
+            repeat: Infinity,
+            repeatType: 'loop',
+            ease: 'linear',
+            duration: isHovering ? marqueeSpeed / 0.3 : marqueeSpeed, // Adjust speed when hovering
+          }
+        }}
+*/
+.marquee {
+  animation: marquee-scroll 20s linear infinite;
+}
+
+.marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc((-100% - 24px)));
+  }
+}
