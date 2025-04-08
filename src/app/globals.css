@@ -4,20 +4,14 @@
   --font-gotham: var(--font-gotham)
 }
 
+html { scroll-behavior: smooth; }
 
-/*
-        animate={{
-          x: [0, -(marqueeWidth + 24) / 3],
-          transition: {
-            repeat: Infinity,
-            repeatType: 'loop',
-            ease: 'linear',
-            duration: isHovering ? marqueeSpeed / 0.3 : marqueeSpeed, // Adjust speed when hovering
-          }
-        }}
-*/
 .marquee {
   animation: marquee-scroll 20s linear infinite;
+}
+
+.pause-animation {
+  animation-play-state: paused;
 }
 
 .marquee:hover {
