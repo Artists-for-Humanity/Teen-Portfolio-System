@@ -1,11 +1,12 @@
 'use client';
 import { AnimatePresence, motion } from "motion/react";
 import Carousel from "./Carousel";
-import { HeroArtwork, ArtworkPiece } from "./artwork-variants/HeroArtwork";
+import { HeroArtwork } from "./artwork-variants/HeroArtwork";
 import { Fragment, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
+import { Artwork } from "@/types";
 
-export default function Hero({ artworks }:{ artworks: ArtworkPiece[] }) {
+export default function Hero({ artworks }:{ artworks: Artwork[] }) {
   const [index, setIndex] = useState(-1);
   const colors = ["bg-rose-400", "bg-emerald-400", "bg-indigo-400"];
 
@@ -19,6 +20,7 @@ export default function Hero({ artworks }:{ artworks: ArtworkPiece[] }) {
               artist={artwork.artist}
               price={artwork.price}
               color={colors[i % 3]}
+              imageUrl={artwork.file}
               index={i}
               setIndex={setIndex}
             />
@@ -46,7 +48,12 @@ export default function Hero({ artworks }:{ artworks: ArtworkPiece[] }) {
               <motion.div
                 layout
                 layoutId={`${index}`}
-                className={`${colors[index % 3]} rounded-xl aspect-video pointer-events-auto relative overflow-hidden`}
+                className={`rounded-xl aspect-video pointer-events-auto relative overflow-hidden`}
+                style={{
+                  backgroundImage: `url(${artworks[index].file})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
               >
                 <motion.div layoutId={`text-${index}`} className="absolute bottom-0 h-1/2 bg-gradient-to-b from-transparent to-black w-full p-8">
                 <div className="w-full h-full flex flex-col justify-end">

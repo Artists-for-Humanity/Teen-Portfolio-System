@@ -1,12 +1,17 @@
 'use client';
 import { useState } from "react";
-import { ArtworkPiece } from "./HeroArtwork";
+import { Artwork } from "@/types";
 
-export default function FormCTAArtwork({ title, artist, price }: ArtworkPiece) {
+export default function FormCTAArtwork({ title, artist, price, file }: Artwork) {
   const [showDetails, setShowDetails] = useState(false);
   return (
     <div className="rounded p-4 transition hover:shadow-lg shadow-[#F26631]/30">
-      <div className="bg-zinc-400 aspect-[3/4] h-[60vh] mb-3"></div>
+      <div className="aspect-[3/4] h-[60vh] mb-3" style={{
+        backgroundImage: `url(${file})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundColor: '#F26631',
+      }}></div>
       <button
         className="w-full text-left"
         onClick={() => setShowDetails((prev) => !prev)}
