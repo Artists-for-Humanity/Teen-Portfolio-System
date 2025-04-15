@@ -1,8 +1,9 @@
 import { Artwork } from "@/types";
+import { motion } from 'motion/react'
 
 export default function PolaroidArtwork({ title, artist, price, file }: Artwork) {
   return (
-    <div className="bg-white rounded p-4 transition border hover:shadow-lg shadow-[#F26631]/30">
+    <motion.div key={file} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-white rounded p-4 transition border hover:shadow-lg shadow-[#F26631]/30">
       <div className="aspect-square mb-3" style={{
         backgroundImage: `url(${file})`,
         backgroundSize: 'cover',
@@ -16,6 +17,6 @@ export default function PolaroidArtwork({ title, artist, price, file }: Artwork)
         </div>
       </div>
       <div className="text-xl font-bold shrink-0">${price}</div>
-    </div>
+    </motion.div>
   )
 }

@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-gotham)'],
+        sans: ['var(--font-poppins)'],
       },
       colors: {
         'afh-red': '#F26631'

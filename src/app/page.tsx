@@ -1,18 +1,15 @@
-// import { ArtworkPiece } from "@/components/artwork-variants/HeroArtwork";
 import Hero from "@/components/Hero";
-import PolaroidArtwork from "@/components/artwork-variants/PolaroidArtwork";
-// import Image from "next/image";
-import { Fragment } from "react";
 import FormCTAArtwork from "@/components/artwork-variants/FormCTAArtwork";
 import ArtistUploadForm from "@/components/ArtistUploadForm";
 import { Artwork, Studio } from "@/types";
 import Airtable from "airtable";
+import Image from "next/image";
+import { FaArrowDown } from "react-icons/fa6";
+import Shop from "@/components/Shop";
 
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID!);
 
 export default async function Home() {
-
-
   async function fetchArtworks() {
     const records = await base("Artwork")
       .select({
@@ -33,32 +30,21 @@ export default async function Home() {
 
   const artworks: Artwork[] = await fetchArtworks();
 
-  console.log(artworks);
-
   return (
     <div className="">
       <main className="w-screen overflow-x-hidden overscroll-none">
         <div className="w-screen px-5 lg:px-10 py-14">
           <div id="hero" className="mb-10 flex flex-col items-center text-center">
             <div className="flex items-center flex-col gap-3 text-[#F26631] justify-center">
-              {/* <Image src="/flower2.svg" alt="" width={72} height={72} className="m" /> */}
-              <span className="uppercase underline underline-offset-4">Artists for Humanity</span>
+              <Image src="/afh-wordmark.png" alt="Artists for Humanity" width={2084} height={1043} className="h-[10vh] w-auto" />
               <span className="block font-bold font-gotham text-7xl uppercase leading-none">
                 Teen Portfolios
               </span>
             </div>
-            <div className="uppercase font-gotham text-xl">Creative Jobs for Creative Teens</div>
-            <a href="#explore-section" className="py-2 px-4 bg-[#F26631] rounded-full text-white font-bold font-gotham uppercase text-sm mt-6" >
-            Explore
-            <span>
-
-            </span>
+            <a href="#explore" className="text-[#F26631] flex flex-col items-center justify-center gap-2">
+              <span className="font-bold uppercase text-lg mt-6 flex flex-col items-center">Explore</span>
+              <FaArrowDown className="ml-2 size-5 animate-bounce" />
             </a>
-            {/* <div className="flex gap-3">
-              <div className="py-2 px-7 border rounded-full">
-                <input type="text" name="searchbar" id="" placeholder="Search for a piece..." />
-              </div>
-            </div> */}
           </div>
           <div className="w-full flex justify-center">
             <div className="overflow-hidden rounded-lg">
@@ -68,22 +54,8 @@ export default async function Home() {
         </div>
         <div>
           <div className="w-screen min-h-screen border-t p-10">
-            <div id="explore-section" className="text-4xl font-bold uppercase font-gotham text-[#F26631]">Explore</div>
-            <div className="flex">
-              <div className="w-screen max-w-xs">
-                <div className="text-2xl font-bold">Filters</div>
-
-              </div>
-              <div className="w-full">
-                <div className="grid grid-cols-3 gap-6">
-                  {artworks.slice(0, 3).map((art, i) => (
-                    <Fragment key={i}>
-                      <PolaroidArtwork {...art} />
-                    </Fragment>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <div id="explore" className="text-4xl font-bold uppercase font-gotham text-[#F26631]">Explore</div>
+            <Shop artworks={artworks} />
           </div>
         </div>
         <div className="w-screen min-h-screen p-10">

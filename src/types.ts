@@ -31,3 +31,13 @@ export interface Artist {
   year: 'freshman' | 'sophomore' | 'junior' | 'senior';
   profilePicture: string;
 }
+
+export interface Filters {
+  artist: string;
+  title: string;
+  studio: Studio;
+  price: {
+    min: number;
+    max: number;
+  };
+}
