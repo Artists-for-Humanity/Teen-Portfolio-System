@@ -65,9 +65,11 @@ export default async function Home() {
               <h2 className="text-2xl font-bold mb-4 text-center">
           Want to showcase your art on our homepage? Upload here!
               </h2>
-              <div className="max-h-[75vh]">
-                <FormCTAArtwork {...artworks[0]} />
-              </div>
+              {artworks.length > 0 && (
+                <div className="max-h-[75vh]">
+                  <FormCTAArtwork {...artworks[0]} />
+                </div>
+              )}
             </div>
             <div className="bg-stone-50 p-6 rounded-lg shadow-md w-full">
               <h2 className="text-2xl font-bold mb-6 uppercase text-[#F26631]">Artists Form Submission</h2>

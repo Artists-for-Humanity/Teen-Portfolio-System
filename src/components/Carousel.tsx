@@ -15,8 +15,10 @@ const Carousel = ({
 
   useEffect(() => {
     if (carouselRef.current) {
-      const firstChild = carouselRef.current.firstElementChild as HTMLElement
-      setItemWidth(firstChild.clientWidth)
+      const firstChild = carouselRef.current.firstElementChild as HTMLElement | null;
+      if (firstChild) {
+        setItemWidth(firstChild.clientWidth);
+      }
     }
   }, [width, children])
 

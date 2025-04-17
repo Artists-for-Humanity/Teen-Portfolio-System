@@ -1,6 +1,25 @@
-import { ArtworkApplication, Studio } from "@/types";
+import { Studio } from "@/types";
 import { NextRequest } from "next/server";
 import Airtable from "airtable";
+import type { Attachment, FieldSet } from "airtable";
+import { v2 as cloudinary } from "cloudinary";
+import type { UploadApiResponse, UploadApiErrorResponse } from "cloudinary";
+
+interface ArtworkFields extends FieldSet {
+  artist: string;
+  email: string;
+  title: string;
+  year: "freshman" | "sophomore" | "junior" | "senior";
+  studio: Studio;
+  file: Attachment[];
+  approved: boolean;
+}
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME!,
+  api_key: process.env.CLOUDINARY_API_KEY!,
+  api_secret: process.env.CLOUDINARY_API_SECRET!,
+});
 
 
 
@@ -22,50 +41,60 @@ export async function POST(req: NextRequest) {
       return Response.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    const filename = Date.now() + "_" + file.name.replaceAll(" ", "_");
-    const url = `https://imgcdn.dev/api/1/upload/?name=${filename}&key=${process.env.IMAGE_API_KEY}`;
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
 
-    const cdnForm = new FormData();
-    cdnForm.append("source", file, filename);
+    const uploadResult: UploadApiResponse = await new Promise(
+      (resolve, reject) => {
+        cloudinary.uploader.upload_stream(
+          { folder: "teen-portfolio" },
+          (error: UploadApiErrorResponse | undefined, result: UploadApiResponse | undefined) => {
+            if (error || !result) return reject(error || new Error("Upload failed"));
+            resolve(result);
+          }
+        ).end(buffer);
+      }
+    );
 
-    const cdnRes = await fetch(url, {
-      method: "POST",
-      body: cdnForm,
-    });
+    const uploadedImage = uploadResult.url;
 
-    const result = await cdnRes.json();
+    if (!uploadedImage) {
+      console.error("Cloudinary upload failed:", uploadResult);
+      return Response.json({ error: "Image upload failed" }, { status: 500 });
+    }
 
-    console.log("Upload result:", result);
+    // Build Airtable attachment object
+    const fileAttachment: Attachment[] = [
+      {
+        url: uploadedImage,
+        filename: file.name,
+      } as Attachment,
+    ];
 
-    // add application to airtable
-    const uploadedImage = result.image.url as string;
-
-    const application: ArtworkApplication = {
-      artist: formData.get("firstName") + " " + formData.get("lastName"),
+    const airtableFields: ArtworkFields = {
+      artist: `${formData.get("firstName")} ${formData.get("lastName")}`,
       email: formData.get("email") as string,
       title: formData.get("title") as string,
-      year: formData.get("year") as 'freshman' | 'sophomore' | 'junior' | 'senior',
+      year: formData.get("year") as "freshman" | "sophomore" | "junior" | "senior",
       studio: formData.get("studio") as Studio,
-      file: uploadedImage,
-      approved: false
+      file: fileAttachment,
+      approved: false,
     };
 
     const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
       process.env.AIRTABLE_BASE_ID as string
     );
 
-    await base("Artwork").create([
+    await base<ArtworkFields>("Artwork").create([
       {
-        fields: {
-          ...application,
-        },
+        fields: airtableFields,
       },
     ]);
 
     return Response.json({
-      url: result.image.url,
-      filename: filename,
-      status: 200
+      url: uploadedImage,
+      filename: file.name,
+      status: 200,
     });
 
   } catch (e) {
