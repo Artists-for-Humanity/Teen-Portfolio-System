@@ -31,7 +31,7 @@ export default async function Home() {
   const artworks: Artwork[] = await fetchArtworks();
 
   return (
-    <div className="">
+    <div className="h-screen min-h-screen">
       <main className="w-screen overflow-x-hidden overscroll-none">
         <div className="w-screen px-5 lg:px-10 py-14">
           <div id="hero" className="mb-10 flex flex-col items-center text-center">

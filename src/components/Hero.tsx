@@ -34,7 +34,7 @@ export default function Hero({ artworks }:{ artworks: Artwork[] }) {
           animate={{ opacity: 0.6 }}
           exit={{ opacity: 0 }}
           key="overlay"
-          className="bg-black opacity-20 fixed inset-0"
+          className="bg-black opacity-20 fixed inset-0 z-20"
           onClick={() => setIndex(-1)}
           >
           </motion.div>
@@ -42,7 +42,7 @@ export default function Hero({ artworks }:{ artworks: Artwork[] }) {
 
         {index !== -1 && (
           <motion.div
-            className="fixed inset-0 flex justify-center items-center pointer-events-none"
+            className="fixed inset-0 flex justify-center items-center pointer-events-none z-30"
           >
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-screen max-w-6xl h-[75vh]">
               <motion.div

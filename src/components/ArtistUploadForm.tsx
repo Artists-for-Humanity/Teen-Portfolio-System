@@ -169,6 +169,10 @@ export default function ArtistUploadForm() {
         <p className="pl-1">or drag and drop</p>
             </div>
             <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+
+            {file && (
+              <p className="text-sm text-gray-500">Uploaded: {file.name}</p>
+            )}
           </div>
         </div>
       </div>

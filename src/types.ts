@@ -29,7 +29,7 @@ export interface Artist {
   studio: Studio;
   bio: string;
   year: 'freshman' | 'sophomore' | 'junior' | 'senior';
-  profilePicture: string;
+  photo: string;
 }
 
 export interface Filters {
