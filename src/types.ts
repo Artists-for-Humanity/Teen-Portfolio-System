@@ -21,9 +21,7 @@ export interface Artwork {
 }
 
 export interface Artist {
-  firstName: string;
-  lastName: string;
-  fullName: string;
+  name: string;
   artworks: Artwork[];
   email: string;
   studio: Studio;

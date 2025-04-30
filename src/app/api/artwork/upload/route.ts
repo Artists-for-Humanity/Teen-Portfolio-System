@@ -1,4 +1,8 @@
+import { ArtworkApplication, Studio } from "@/types";
 import { NextRequest } from "next/server";
+import Airtable from "airtable";
+
+
 
 export const dynamic = "force-dynamic";
 
@@ -29,17 +33,39 @@ export async function POST(req: NextRequest) {
       body: cdnForm,
     });
 
-    if (!cdnRes.ok) {
-      throw new Error("Failed to upload to CDN");
-    }
-
     const result = await cdnRes.json();
+
+    // add application to airtable
+    const uploadedImage = result.image.url as string;
+
+    const application: ArtworkApplication = {
+      artist: formData.get("name") as string,
+      email: formData.get("email") as string,
+      title: formData.get("title") as string,
+      year: formData.get("year") as 'freshman' | 'sophomore' | 'junior' | 'senior',
+      studio: formData.get("studio") as Studio,
+      file: uploadedImage,
+      approved: false
+    };
+
+    const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
+      process.env.AIRTABLE_BASE_ID as string
+    );
+
+    await base("Artwork").create([
+      {
+        fields: {
+          ...application,
+        },
+      },
+    ]);
 
     return Response.json({
       url: result.image.url,
       filename: filename,
-      status: 200,
+      status: 200
     });
+
   } catch (e) {
     console.error("Upload error:", e);
     return Response.json({ error: "Error uploading file" }, { status: 500 });

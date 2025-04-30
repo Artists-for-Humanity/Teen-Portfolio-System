@@ -35,13 +35,13 @@ export default async function Home() {
       <main className="w-screen overflow-x-hidden overscroll-none">
         <div className="w-screen px-5 lg:px-10 py-14">
           <div id="hero" className="mb-10 flex flex-col items-center text-center">
-            <div className="flex items-center flex-col gap-3 text-[#F26631] justify-center">
+            <div className="flex items-center flex-col gap-3 text-afh-primary justify-center">
               <Image src="/afh-wordmark.png" alt="Artists for Humanity" width={2084} height={1043} className="h-[10vh] w-auto" />
               <span className="block font-bold font-gotham text-7xl uppercase leading-none">
                 Teen Portfolios
               </span>
             </div>
-            <a href="#explore" className="text-[#F26631] flex flex-col items-center justify-center gap-2">
+            <a href="#explore" className="text-afh-primary flex flex-col items-center justify-center gap-2">
               <span className="font-bold uppercase text-lg mt-6 flex flex-col items-center">Explore</span>
               <FaArrowDown className="ml-2 size-5 animate-bounce" />
             </a>
@@ -54,7 +54,7 @@ export default async function Home() {
         </div>
         <div>
           <div className="w-screen min-h-screen border-t p-10">
-            <div id="explore" className="text-4xl font-bold uppercase font-gotham text-[#F26631]">Explore</div>
+            <div id="explore" className="text-4xl font-bold uppercase font-gotham text-afh-primary">Explore</div>
             <Shop artworks={artworks} />
           </div>
         </div>
@@ -70,7 +70,7 @@ export default async function Home() {
               </div>
             </div>
             <div className="bg-stone-50 p-6 rounded-lg shadow-md w-full">
-              <h2 className="text-2xl font-bold mb-6 uppercase text-[#F26631]">Artists Form Submission</h2>
+              <h2 className="text-2xl font-bold mb-6 uppercase text-afh-primary">Artists Form Submission</h2>
               <ArtistUploadForm />
             </div>
           </div>

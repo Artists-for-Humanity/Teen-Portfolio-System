@@ -11,7 +11,7 @@ module.exports = {
         sans: ['var(--font-poppins)'],
       },
       colors: {
-        'afh-red': '#F26631'
+        'afh-primary': '#F26631',
       }
     },
   },

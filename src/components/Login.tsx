@@ -19,7 +19,7 @@ export default function Login() {
       return;
     }
 
-    const res = await fetch('/api/authenticate', {
+    const res = await fetch('/api/users/authenticate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,6 +29,10 @@ export default function Login() {
 
     if (res.status === 200) {
       router.push('/profile');
+    } else if (res.status === 201) {
+      alert('Account created successfully. Please log in.');
+    } else if (res.status === 401) {
+      alert('Unauthorized. Please check your credentials.');
     } else {
       alert('Authentication failed');
     }
@@ -50,7 +54,7 @@ export default function Login() {
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
         required
-        className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-[#F26631]"
+        className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-afh-primary"
           />
           <input
         type="password"
@@ -58,7 +62,7 @@ export default function Login() {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
         required
-        className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-[#F26631]"
+        className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-afh-primary"
           />
           {isSignup && (
         <input
@@ -67,19 +71,19 @@ export default function Login() {
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirm Password"
           required
-          className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-[#F26631]"
+          className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-afh-primary"
         />
           )}
           <button
         type="submit"
-        className="w-full bg-[#F26631] text-white py-2 rounded hover:bg-blue-600 transition"
+        className="w-full bg-afh-primary text-white py-2 rounded hover:bg-blue-600 transition"
           >
         {isSignup ? 'Sign Up' : 'Log In'}
           </button>
         </form>
         <button
           onClick={() => setIsSignup(!isSignup)}
-          className="mt-4 text-[#F26631] hover:underline"
+          className="mt-4 text-afh-primary hover:underline"
         >
           {isSignup ? 'Switch to Log In' : 'Switch to Sign Up'}
         </button>

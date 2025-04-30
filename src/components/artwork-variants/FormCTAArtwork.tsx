@@ -5,7 +5,7 @@ import { Artwork } from "@/types";
 export default function FormCTAArtwork({ title, artist, price, file }: Artwork) {
   const [showDetails, setShowDetails] = useState(false);
   return (
-    <div className="rounded p-4 transition hover:shadow-lg shadow-[#F26631]/30">
+    <div className="rounded p-4 transition hover:shadow-lg shadow-afh-primary/30">
       <div className="aspect-[3/4] h-[60vh] mb-3" style={{
         backgroundImage: `url(${file})`,
         backgroundSize: 'cover',

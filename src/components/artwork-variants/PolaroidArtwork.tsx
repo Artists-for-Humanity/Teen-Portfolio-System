@@ -3,7 +3,7 @@ import { motion } from 'motion/react'
 
 export default function PolaroidArtwork({ title, artist, price, file }: Artwork) {
   return (
-    <motion.div key={file} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-white rounded p-4 transition border hover:shadow-lg shadow-[#F26631]/30">
+    <motion.div key={file} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="bg-white rounded p-4 transition border hover:shadow-lg shadow-afh-primary/30">
       <div className="aspect-square mb-3" style={{
         backgroundImage: `url(${file})`,
         backgroundSize: 'cover',
