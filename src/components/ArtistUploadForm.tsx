@@ -1,5 +1,6 @@
 'use client';
 import { Artist } from "@/types";
+import { ImageUp } from "lucide-react";
 // import { FormContent } from "@/types";
 import { FormEvent, useRef, useState } from "react";
 
@@ -13,6 +14,7 @@ export default function ArtistUploadForm({ profile }: ArtistUploadFormProps) {
   const [file, setFile] = useState<File | null>(null);
   const form = useRef<HTMLFormElement>(null!);
   const [uploadStatus, setUploadStatus] = useState<string>("");
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     if (profile) {
@@ -36,6 +38,13 @@ export default function ArtistUploadForm({ profile }: ArtistUploadFormProps) {
       formData.append("file", file);
     }
 
+    // append email and name manually to the form data bc even tho its readonly it doesnt show up?
+    const email = profile?.email || formData.get("email");
+    const name = profile?.name || formData.get("name");
+
+    formData.append("email", email as string);
+    formData.append("name", name as string);
+
     const response = await fetch("/api/artwork/upload", {
       method: "POST",
       body: formData,
@@ -49,49 +58,51 @@ export default function ArtistUploadForm({ profile }: ArtistUploadFormProps) {
         // refresh to show the updated pending/approved status
         window.location.reload();
       }
+      setIsUploading(false);
     } else {
       console.error("Error uploading file");
+      setIsUploading(false);
     }
   };
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit} ref={form}>
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="name" className="block text-sm font-medium text-stone-700">
           Name
         </label>
         <input
           type="text"
           id="name"
           name="name"
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3 disabled:bg-stone-50"
+          className="mt-1 block w-full rounded-md border-stone-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-3 disabled:bg-stone-50"
           defaultValue={profile?.name || ""}
-          readOnly={!!profile}
+          // readOnly={!!profile}
           required
         />
       </div>
 
       <div>
-        <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="title" className="block text-sm font-medium text-stone-700">
           Artwork Title
         </label>
         <input
           type="text"
           id="title"
           name="title"
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
+          className="mt-1 block w-full rounded-md border-stone-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
           required
         />
       </div>
 
       <div>
-        <label htmlFor="year" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="year" className="block text-sm font-medium text-stone-700">
           Year (in High School)
         </label>
         <select
           id="year"
           name="year"
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
+          className="mt-1 block w-full rounded-md border-stone-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
           required
         >
           <option value="">Select your year</option>
@@ -103,28 +114,27 @@ export default function ArtistUploadForm({ profile }: ArtistUploadFormProps) {
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="email" className="block text-sm font-medium text-stone-700">
           Email
         </label>
         <input
           type="email"
           id="email"
           name="email"
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 disabled:bg-stone-50"
-          value={profile?.email || ""}
-          readOnly={!!profile}
+          className="mt-1 block w-full rounded-md border-stone-300 border shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 disabled:bg-stone-50"
+          defaultValue={profile?.email || ""}
           required
         />
       </div>
 
       <div className="hidden">
-        <label htmlFor="studio" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="studio" className="block text-sm font-medium text-stone-700">
           Studio
         </label>
         <select
           id="studio"
           name="studio"
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
+          className="mt-1 block w-full rounded-md border-stone-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
           required
         >
           <option value="graphic-design">Graphic Design</option>
@@ -132,35 +142,16 @@ export default function ArtistUploadForm({ profile }: ArtistUploadFormProps) {
       </div>
 
       <div>
-        <label htmlFor="fileUpload" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="fileUpload" className="block text-sm font-medium text-stone-700">
           Upload Your Artwork
         </label>
-        <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
-          <div className="space-y-1 text-center">
-            <svg
-              className="mx-auto h-12 w-12 text-gray-400"
-              stroke="currentColor"
-              fill="none"
-              viewBox="0 0 48 48"
-              aria-hidden="true"
-            >
-              <path
-                d="M28 8H20a4 4 0 00-4 4v28a4 4 0 004 4h8a4 4 0 004-4V12a4 4 0 00-4-4z"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M32 16l-8 8-8-8"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <div className="flex text-sm text-gray-600">
+        <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-stone-300 px-6 py-10">
+          <div className="flex flex-col gap-1 items-center text-center">
+            <ImageUp className="size-12 text-neutral-600" />
+            <div className="flex text-sm text-stone-600">
               <label
                 htmlFor="fileUpload"
-                className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500 p-1"
+                className="relative cursor-pointer rounded-full bg-afh-primary/10 font-medium text-afh-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-afh-primary focus-within:ring-offset-2 hover:text-afh-primary py-1 px-4 my-4"
               >
                 <span>Upload a file</span>
                 <input
@@ -179,27 +170,28 @@ export default function ArtistUploadForm({ profile }: ArtistUploadFormProps) {
                   required
                 />
               </label>
-              <p className="pl-1">or drag and drop</p>
             </div>
-            <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+            <p className="text-xs text-stone-500">Accepting: PNG, JPG, GIF</p>
 
             {file && (
-              <p className="text-sm text-gray-500">Uploaded: {file.name}</p>
+              <p className="text-sm mt-2 text-afh-primary">Uploaded: {file.name}</p>
             )}
           </div>
         </div>
       </div>
 
-      <div>
+      <div className="">
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-afh-primary text-white font-bold rounded-md hover:bg-[#d4552b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-afh-primary disabled:!opacity-30"
+          className="w-full py-2 px-4 bg-afh-primary text-white font-bold rounded-md hover:bg-[#d4552b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-afh-primary disabled:!opacity-30 mb-14 disabled:cursor-not-allowed disabled:bg-afh-primary/50"
+          onClick={() => setIsUploading(true)}
+          disabled={isUploading}
         >
           Submit
         </button>
         <div>
           {uploadStatus && (
-            <p className="mt-2 text-sm text-gray-500">{uploadStatus}</p>
+            <p className="mt-2 text-sm text-stone-500">{uploadStatus}</p>
           )}
         </div>
       </div>

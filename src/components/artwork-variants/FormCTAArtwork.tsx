@@ -2,10 +2,10 @@
 import { useState } from "react";
 import { Artwork } from "@/types";
 
-export default function FormCTAArtwork({ title, artist, price, file }: Artwork) {
+export default function FormCTAArtwork({ title, artist, file }: Artwork) {
   const [showDetails, setShowDetails] = useState(false);
   return (
-    <div className="rounded p-4 transition hover:shadow-lg shadow-afh-primary/30">
+    <div className="hidden md:block rounded-lg border border-afh-primary p-4 transition hover:shadow-lg shadow-afh-primary/30">
       <div className="aspect-[3/4] h-[60vh] mb-3" style={{
         backgroundImage: `url(${file})`,
         backgroundSize: 'cover',
@@ -16,12 +16,12 @@ export default function FormCTAArtwork({ title, artist, price, file }: Artwork) 
         className="w-full text-left"
         onClick={() => setShowDetails((prev) => !prev)}
       >
-        <div className="flex justify-between items-start pb-3 mb-3 border-b">
+        <div className="flex justify-between items-start">
           <div>
-        <div className="font-gotham font-bold text-xl">{title}</div>
-        <div className="text-lg italic">{artist}</div>
+            <div className="font-gotham font-bold text-xl">{title}</div>
+            <div className="text-lg italic">{artist}</div>
           </div>
-          <div className="text-xl font-bold shrink-0">${price}</div>
+          {/* <div className="text-xl font-bold shrink-0">${price}</div> */}
         </div>
       </button>
       {showDetails && (

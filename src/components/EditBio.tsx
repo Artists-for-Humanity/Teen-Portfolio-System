@@ -1,7 +1,7 @@
 'use client';
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { FaPencil } from "react-icons/fa6";
+import { PencilLine } from "lucide-react";
 
 export default function EditBio() {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +41,7 @@ export default function EditBio() {
         onClick={() => setIsOpen(true)}
         className="inline-flex items-center flex-nowrap gap-2 text-sm uppercase cursor-pointer"
       >
-        <FaPencil className="size-4" />
+        <PencilLine className="size-4" />
         Edit Bio
       </button>
       <AnimatePresence>

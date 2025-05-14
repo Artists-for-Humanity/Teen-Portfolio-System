@@ -4,7 +4,7 @@ import ArtistUploadForm from "@/components/ArtistUploadForm";
 import { Artwork, Studio } from "@/types";
 import Airtable from "airtable";
 import Image from "next/image";
-import { FaArrowDown } from "react-icons/fa6";
+import { ArrowDown } from "lucide-react";
 import Shop from "@/components/Shop";
 
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID!);
@@ -43,7 +43,7 @@ export default async function Home() {
             </div>
             <a href="#explore" className="text-afh-primary flex flex-col items-center justify-center gap-2">
               <span className="font-bold uppercase text-lg mt-6 flex flex-col items-center">Explore</span>
-              <FaArrowDown className="ml-2 size-5 animate-bounce" />
+              <ArrowDown className="ml-2 size-5 animate-bounce" />
             </a>
           </div>
           <div className="w-full flex justify-center">
@@ -59,7 +59,7 @@ export default async function Home() {
           </div>
         </div>
         <div className="w-screen min-h-screen p-10">
-          <div className="flex justify-center items-center gap-10 p-20">
+          <div className="flex md:flex-row flex-col justify-center items-center gap-10 md:p-20">
             {/* Left Column */}
             <div className="flex flex-col items-center">
               <h2 className="text-2xl font-bold mb-4 text-center">
@@ -69,7 +69,9 @@ export default async function Home() {
                 <FormCTAArtwork {...artworks[0]} />
               </div>
             </div>
-            <div className="bg-stone-50 p-6 rounded-lg shadow-md w-full">
+
+            {/* Right Column */}
+            <div className="bg-stone-50/40 p-4 rounded-lg shadow-md w-full">
               <h2 className="text-2xl font-bold mb-6 uppercase text-afh-primary">Artists Form Submission</h2>
               <ArtistUploadForm />
             </div>

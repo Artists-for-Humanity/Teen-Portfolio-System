@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import Carousel from "./Carousel";
 import { HeroArtwork } from "./artwork-variants/HeroArtwork";
 import { Fragment, useState } from "react";
-import { FaRegHeart } from "react-icons/fa";
+import { Heart } from "lucide-react";
 import { Artwork } from "@/types";
 
 export default function Hero({ artworks }:{ artworks: Artwork[] }) {
@@ -71,7 +71,7 @@ export default function Hero({ artworks }:{ artworks: Artwork[] }) {
                     <div className="shrink-0">
                       <motion.button className="" onClick={() => setIndex(-1)}>
                         <span className="sr-only"></span>
-                        <FaRegHeart className="size-6 hover:text-rose-400" />
+                        <Heart className="size-6 hover:text-rose-400" />
                       </motion.button>
                     </div>
                   </motion.div>

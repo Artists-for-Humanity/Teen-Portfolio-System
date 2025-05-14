@@ -4,25 +4,6 @@ import crypto from "node:crypto";
 const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID!);
 const usersTable = base('Users');
 
-async function createUser(email: string, password: string) {
-  const salt = crypto.randomBytes(16).toString('hex');
-  const hash = hashPassword(password, salt);
-
-  try {
-    await usersTable.create([
-      {
-        fields: {
-          email: email,
-          salt: salt,
-          hash: hash,
-        },
-      },
-    ]);
-  } catch (error) {
-    console.error('Error creating user:', error);
-  }
-}
-
 export async function POST(req: Request) {
   const { email, password } = await req.json();
 
@@ -34,9 +15,8 @@ export async function POST(req: Request) {
     const records = await usersTable.select({ filterByFormula: `{email} = '${email}'` }).firstPage();
 
     if (records.length === 0) {
-      // Email not found, create a new user
-      await createUser(email, password);
-      return new Response(JSON.stringify({ message: "User created successfully" }), { status: 201 });
+      // Email not found, send a response indicating the account doesn't exist
+      return new Response(JSON.stringify({ error: "Couldn't find an account with that email. Please sign up." }), { status: 404 });
     } else {
       // Email exists, validate password
       const user = records[0].fields;

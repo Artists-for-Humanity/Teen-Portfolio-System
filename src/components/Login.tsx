@@ -7,6 +7,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter();
 
   const handleSubmit = async (e: FormEvent) => {
@@ -15,11 +16,11 @@ export default function Login() {
     console.log(password);
 
     if (isSignup && password !== confirmPassword) {
-      alert('Passwords do not match');
+      setError('Passwords do not match');
       return;
     }
 
-    const res = await fetch('/api/users/authenticate', {
+    const res = await fetch(`/api/users/${isSignup ? 'create' : 'authenticate'}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,12 +30,9 @@ export default function Login() {
 
     if (res.status === 200) {
       router.push('/profile');
-    } else if (res.status === 201) {
-      alert('Account created successfully. Please log in.');
-    } else if (res.status === 401) {
-      alert('Unauthorized. Please check your credentials.');
     } else {
-      alert('Authentication failed');
+      const data = await res.json();
+      setError(data.error || 'An error occurred');
     }
   };
 
@@ -73,6 +71,11 @@ export default function Login() {
           required
           className="w-full p-2 mb-4 border rounded focus:outline-none focus:ring-2 focus:ring-afh-primary"
         />
+          )}
+          {error && (
+            <div className="text-red-500 text-sm mb-4">
+              {error}
+            </div>
           )}
           <button
         type="submit"

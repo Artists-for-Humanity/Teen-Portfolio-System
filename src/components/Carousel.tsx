@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect, Children } from 'react'
 import { motion } from 'motion/react'
 import { useWindowSize } from '@react-hook/window-size'
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa6';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 const Carousel = ({
   children,
 }: {
@@ -50,14 +50,14 @@ const Carousel = ({
         className="absolute left-6 top-10 md:top-1/2 -translate-y-1/2 bg-stone-800/30 rounded-md text-white p-2"
       >
         <span className="sr-only">Previous artwork</span>
-        <FaArrowLeft className="size-6" />
+        <ArrowLeft className="size-6" />
       </button>
       <button
         onClick={handleNext}
         className="absolute right-6 top-10 md:top-1/2 -translate-y-1/2 bg-stone-800/30 rounded-md text-white p-2"
       >
         <span className="sr-only">Next artwork</span>
-        <FaArrowRight className="size-6" />
+        <ArrowRight className="size-6" />
       </button>
     </div>
   )

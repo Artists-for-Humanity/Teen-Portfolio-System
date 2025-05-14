@@ -1,5 +1,5 @@
 'use client';
-import { FaBars as FaList, FaBorderAll as FaGrid } from 'react-icons/fa6';
+import { LayoutList, LayoutGrid } from 'lucide-react';
 import { useState } from 'react';
 import { Artwork } from '@/types';
 import { motion } from 'motion/react';
@@ -16,13 +16,13 @@ export default function PersonalArtworkView({ name, artworks }:{ name: string, a
           className={`transition rounded-full p-2 ${isGridView ? 'bg-afh-primary text-white' : 'text-stone-800 bg-transparent'} ${isGridView ? 'font-bold' : ''}`}
           onClick={() => setIsGridView(true)}
           >
-            <FaGrid className="size-6" />
+            <LayoutGrid className="size-6" />
           </button>
           <button
           className={`transition rounded-full p-2 ${!isGridView ? 'bg-afh-primary text-white' : 'text-stone-800 bg-transparent'} ${!isGridView ? 'font-bold' : ''}`}
           onClick={() => setIsGridView(false)}
           >
-            <FaList className="size-6" />
+            <LayoutList className="size-6" />
           </button>
         </div>
       </div>
@@ -51,6 +51,11 @@ export default function PersonalArtworkView({ name, artworks }:{ name: string, a
             )}
           </div>
         ))}
+        {artworks.length === 0 && (
+          <div className="w-full h-full flex items-center justify-center col-span-2 md:col-span-4 lg:col-span-5">
+            <p className="text-lg text-stone-500">Hmm, nothing to see here!</p>
+          </div>
+        )}
       </div>
     </div>
   );

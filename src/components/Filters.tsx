@@ -7,7 +7,7 @@ import { createContext } from 'react';
 export const FiltersContext = createContext<FilterType>({
   artist: "",
   title: "",
-  studio: 'graphic-design',
+  studio: "graphic-design",
   price: {
     min: 0,
     max: 1000,
@@ -33,7 +33,7 @@ export default function Filters({ filters, setFilters }:{ filters: FilterType, s
           onChange={(e) => setFilters({ ...filters, artist: e.target.value })}
           className="border p-2 rounded w-full"
         />
-        <div className="flex items-center space-x-4">
+        {/* <div className="flex items-center space-x-4">
           <div className="flex-1">
             <label htmlFor="price-min" className="block text-sm uppercase font-bold text-stone-400 mb-2">
               Minimum Price
@@ -71,7 +71,7 @@ export default function Filters({ filters, setFilters }:{ filters: FilterType, s
         </div>
         <div className="text-sm text-gray-500 mt-2">
           Selected Range: ${filters.price?.min || 0} - ${filters.price?.max || 1000}
-        </div>
+        </div> */}
       </div>
     </div>
   )
