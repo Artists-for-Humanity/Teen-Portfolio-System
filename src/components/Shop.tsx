@@ -38,8 +38,22 @@ export default function Shop({ artworks }:{ artworks: Artwork[] }) {
             >Filter artwork</button>
             <AnimatePresence>
               {filterModalIsOpen && (
-                <motion.div className="fixed inset-0 z-[60] flex justify-center items-end bg-black/25 backdrop-blur-sm">
-                  <motion.div className="bg-white h-[60lvh] p-6">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  onClick={() => setFilterModalIsOpen(false)}
+                  className="fixed inset-0 z-[60] flex justify-center items-end bg-black/25 backdrop-blur-sm"
+                >
+                  <motion.div
+                    initial={{ y: 100 }}
+                    animate={{ y: 0 }}
+                    exit={{ y: 100 }}
+                    transition={{ duration: 0.2 }}
+                    onClick={(e) => e.stopPropagation()}
+                    className="bg-white h-[60lvh] p-6"
+                  >
                     <div className="flex flex-col h-[60svh]">
                       <Filters filters={filters} setFilters={setFilters} />
                       <hr className="my-4 opacity-25" />

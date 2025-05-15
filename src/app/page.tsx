@@ -37,7 +37,7 @@ export default async function Home() {
           <div id="hero" className="mb-10 flex flex-col items-center text-center">
             <div className="flex items-center flex-col gap-3 text-afh-primary justify-center">
               <Image src="/afh-wordmark.png" alt="Artists for Humanity" width={2084} height={1043} className="h-[10vh] w-auto" />
-              <span className="block font-bold font-gotham text-7xl uppercase leading-none">
+              <span className="block font-bold font-gotham text-5xl md:text-7xl uppercase leading-none">
                 Teen Portfolios
               </span>
             </div>

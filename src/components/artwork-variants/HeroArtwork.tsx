@@ -29,7 +29,7 @@ export function HeroArtwork({ title, artist, price, color, imageUrl, index, setI
           {price && <span className="text-xl md:text-3xl font-bold text-white block font-gotham uppercase">${price}</span>}
         </div>
       </motion.div>
-      <motion.button className="bg-white py-2 px-3 absolute top-8 right-8 group-hover:opacity-100 opacity-0 transition rounded-md text-afh-primary font-gotham uppercase font-bold cursor-pointer" onClick={() => setIndex(index)}>
+      <motion.button className="bg-white py-2 px-3 absolute top-8 right-8 group-hover:opacity-100 opacity-0 transition rounded-md text-afh-primary font-gotham uppercase font-bold cursor-pointer hidden md:block" onClick={() => setIndex(index)}>
         <span className="">View In Full</span>
         <ArrowRight className="size-6 -rotate-45 inline ml-3" />
       </motion.button>

@@ -1,4 +1,5 @@
 'use client';
+import { Mail } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
@@ -69,8 +70,10 @@ export default function EditProfile() {
       </button>
       <AnimatePresence>
         {isOpen && (
-          <motion.div className="">
-            <div className="fixed z-50 bg-black/25 inset-0 w-screen h-screen flex justify-center items-center p-8">
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          >
+            <div className="fixed z-[9999] bg-black/25 inset-0 w-screen h-screen flex justify-center items-center p-8">
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="w-full max-w-4xl">
                 <div className="bg-white p-8 rounded-lg shadow-lg">
                   <div className="w-full flex justify-between flex-nowrap">
@@ -121,30 +124,11 @@ export default function EditProfile() {
                       </label>
                       <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
                       <div className="space-y-1 text-center">
-                        <svg
-                        className="mx-auto h-12 w-12 text-gray-400"
-                        stroke="currentColor"
-                        fill="none"
-                        viewBox="0 0 48 48"
-                        aria-hidden="true"
-                        >
-                        <path
-                          d="M28 8H20a4 4 0 00-4 4v28a4 4 0 004 4h8a4 4 0 004-4V12a4 4 0 00-4-4z"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M32 16l-8 8-8-8"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        </svg>
+                        <Mail />
                         <div className="flex text-sm text-gray-600">
                         <label
                           htmlFor="profilePicture"
-                          className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500 p-1"
+                          className="relative cursor-pointer rounded-md bg-white font-medium text-afh-primary focus-within:outline-none focus-within:ring-2 focus-within:ring-afh-primary focus-within:ring-offset-2 hover:text-afh-primary p-1 inline whitespace-nowrap"
                         >
                           <span>Upload a file</span>
                           <input
@@ -158,7 +142,7 @@ export default function EditProfile() {
                           className="sr-only"
                           />
                         </label>
-                        <p className="pl-1">or drag and drop</p>
+                        <p className="pl-1 md:inline hidden">or drag and drop</p>
                         </div>
                         <p className="text-xs text-gray-500">
                         PNG, JPG up to 10MB

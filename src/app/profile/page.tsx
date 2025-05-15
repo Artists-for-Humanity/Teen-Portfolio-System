@@ -37,11 +37,11 @@ export default async function Profile() {
   
   return (
     <div className="">
-      <div className="w-screen h-screen px-20 pt-6">
+      <div className="w-screen h-screen px-6 md:px-20 pt-6">
         <div className="flex flex-col items-center justify-center h-full">
-          <div className="flex justify-between gap-16 w-full h-full">
+          <div className="flex flex-col md:flex-row md:justify-between md:gap-16 w-full h-full">
             <div className="w-full max-w-sm">
-              <div className="fixed top-0 w-full max-w-sm flex flex-col items-center gap-6 h-screen justify-center">
+              <div className="w-full max-w-sm flex flex-col items-center gap-6 h-screen justify-center">
                 <EditProfile />
                 <div className="aspect-square rounded-full bg-zinc-100 h-[30vh] relative" style={{
                   backgroundImage: `url(${artist.photo})`,
