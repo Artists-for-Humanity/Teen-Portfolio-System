@@ -38,6 +38,7 @@ export default function ArtistUploadForm({ profile }: ArtistUploadFormProps) {
       formData.append("file", file);
     }
 
+    console.log(formData);
     // append email and name manually to the form data bc even tho its readonly it doesnt show up?
     const email = profile?.email || formData.get("email");
     const name = profile?.name || formData.get("name");

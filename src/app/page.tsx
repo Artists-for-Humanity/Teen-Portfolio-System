@@ -2,7 +2,7 @@ import Hero from "@/components/Hero";
 import FormCTAArtwork from "@/components/artwork-variants/FormCTAArtwork";
 import ArtistUploadForm from "@/components/ArtistUploadForm";
 import { Artwork, Studio } from "@/types";
-import Airtable from "airtable";
+import Airtable, { Attachment } from "airtable";
 import Image from "next/image";
 import { ArrowDown } from "lucide-react";
 import Shop from "@/components/Shop";
@@ -22,7 +22,7 @@ export default async function Home() {
       artist: record.get("artist") as string,
       email: record.get("email") as string,
       year: record.get("year") as 'freshman' | 'sophomore' | 'junior' | 'senior',
-      file: record.get("file") as string,
+      file: (record.get("file") as Attachment[])[0].url,
       studio: record.get("studio") as Studio,
       price: Number(record.get("price")) || undefined,
     }));

@@ -48,6 +48,8 @@ export async function POST(req: NextRequest) {
       approved: false
     };
 
+    console.log(application);
+
     const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
       process.env.AIRTABLE_BASE_ID as string
     );
