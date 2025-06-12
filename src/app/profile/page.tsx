@@ -62,13 +62,27 @@ export default async function Profile() {
               </div>
             </div>
             <div className="w-full h-screen">
-              <PersonalArtworkView name="My Artworks" artworks={artworks.map(a => ({
-                ...a.fields as object,
-              }) as Artwork)} />
+              <PersonalArtworkView
+                name="My Artworks"
+                artworks={artworks.map(a => {
+                  const fields = a.fields as any;
+                  return {
+                    ...fields,
+                    file: Array.isArray(fields.file) ? fields.file[0]?.url : fields.file,
+                  };
+                }) as Artwork[]}
+              />
               <hr className="my-8 opacity-25" />
-              <PersonalArtworkView name="Pending Artworks" artworks={pendingArtworks.map(a => ({
-                ...a.fields as object,
-              }) as Artwork)} />
+              <PersonalArtworkView
+                name="Pending Artworks"
+                artworks={pendingArtworks.map(a => {
+                  const fields = a.fields as any;
+                  return {
+                    ...fields,
+                    file: Array.isArray(fields.file) ? fields.file[0]?.url : fields.file,
+                  };
+                }) as Artwork[]}
+              />
               <hr className="my-8 opacity-25" />
               <div className="text-2xl font-bold mb-3">Upload Artwork</div>
               <ArtistUploadForm profile={{
