@@ -6,7 +6,8 @@ export interface ArtworkApplication {
   title: string;
   year: 'freshman' | 'sophomore' | 'junior' | 'senior';
   studio: Studio;
-  file: string;
+  // file: string;
+  file: { url: string }[];
   approved: boolean;
 }
 

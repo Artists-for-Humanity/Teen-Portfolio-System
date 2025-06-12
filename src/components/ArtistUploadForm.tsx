@@ -31,37 +31,38 @@ export default function ArtistUploadForm({ profile }: ArtistUploadFormProps) {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsUploading(true);
 
-    const formData = new FormData(event.currentTarget);
-
-    if (file) {
-      formData.append("file", file);
-    }
-
-    console.log(formData);
-    // append email and name manually to the form data bc even tho its readonly it doesnt show up?
-    const email = profile?.email || formData.get("email");
-    const name = profile?.name || formData.get("name");
-
-    formData.append("email", email as string);
-    formData.append("name", name as string);
-
-    const response = await fetch("/api/artwork/upload", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (response.ok) {
-      console.log("File uploaded successfully");
-      setUploadStatus("File uploaded successfully!");
-
-      if (profile) {
-        // refresh to show the updated pending/approved status
-        window.location.reload();
+    try {
+      const formData = new FormData(event.currentTarget);
+      if (file) {
+        formData.append("file", file);
       }
-      setIsUploading(false);
-    } else {
-      console.error("Error uploading file");
+
+      const email = profile?.email || formData.get("email");
+      const name = profile?.name || formData.get("name");
+
+      formData.append("email", email as string);
+      formData.append("name", name as string);
+
+      const response = await fetch("/api/artwork/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        console.log("File uploaded successfully");
+        setUploadStatus("File uploaded successfully!");
+
+        if (profile) {
+          window.location.reload();
+        }
+      } else {
+        console.error("Error uploading file");
+      }
+    } catch (err) {
+      console.error("Error during submission", err);
+    } finally {
       setIsUploading(false);
     }
   };
@@ -185,7 +186,6 @@ export default function ArtistUploadForm({ profile }: ArtistUploadFormProps) {
         <button
           type="submit"
           className="w-full py-2 px-4 bg-afh-primary text-white font-bold rounded-md hover:bg-[#d4552b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-afh-primary disabled:!opacity-30 mb-14 disabled:cursor-not-allowed disabled:bg-afh-primary/50"
-          onClick={() => setIsUploading(true)}
           disabled={isUploading}
         >
           Submit

@@ -1,7 +1,6 @@
-import { ArtworkApplication, Studio } from "@/types";
+import { Studio } from "@/types";
 import { NextRequest } from "next/server";
 import Airtable from "airtable";
-
 
 
 export const dynamic = "force-dynamic";
@@ -34,17 +33,22 @@ export async function POST(req: NextRequest) {
     });
 
     const result = await cdnRes.json();
+    console.log("CDN upload result:", result);
+
+    if (!result?.image?.url) {
+      console.error("Missing image URL in response", result);
+      return new Response(JSON.stringify({ error: "Image upload failed" }), { status: 500 });
+    }
 
     // add application to airtable
     const uploadedImage = result.image.url as string;
 
-    const application: ArtworkApplication = {
+    const application = {
       artist: formData.get("name") as string,
       email: formData.get("email") as string,
       title: formData.get("title") as string,
       year: formData.get("year") as 'freshman' | 'sophomore' | 'junior' | 'senior',
       studio: formData.get("studio") as Studio,
-      file: uploadedImage,
       approved: false
     };
 
@@ -54,10 +58,12 @@ export async function POST(req: NextRequest) {
       process.env.AIRTABLE_BASE_ID as string
     );
 
+    // @ts-expect-error Airtable type mismatch workaround
     await base("Artwork").create([
       {
         fields: {
           ...application,
+          file: [{ url: uploadedImage }],
         },
       },
     ]);
