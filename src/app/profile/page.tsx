@@ -65,7 +65,7 @@ export default async function Profile() {
               <PersonalArtworkView
                 name="My Artworks"
                 artworks={artworks.map(a => {
-                  const fields = a.fields as any;
+                  const fields = a.fields as unknown as Artwork;
                   return {
                     ...fields,
                     file: Array.isArray(fields.file) ? fields.file[0]?.url : fields.file,
@@ -76,7 +76,7 @@ export default async function Profile() {
               <PersonalArtworkView
                 name="Pending Artworks"
                 artworks={pendingArtworks.map(a => {
-                  const fields = a.fields as any;
+                  const fields = a.fields as unknown as Artwork;
                   return {
                     ...fields,
                     file: Array.isArray(fields.file) ? fields.file[0]?.url : fields.file,
